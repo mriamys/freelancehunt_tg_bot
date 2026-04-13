@@ -25,6 +25,6 @@ def format_project_notification(project: dict, employer_stats: str = "") -> str:
         f"🛠 <b>Категории:</b> {html.escape(skills_str)}\n"
         f"👤 <b>Заказчик:</b> {html.escape(employer_name)} <i>{html.escape(employer_stats)}</i>\n\n"
         f"📝 <b>Описание:</b>\n"
-        f"<blockquote>{html.escape(desc)}</blockquote>"
+        f"<blockquote expandable>{html.escape(desc)}</blockquote>"
     )
     return msg
