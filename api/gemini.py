@@ -6,6 +6,7 @@ from config import settings
 from bio import BIO
 from utils.logger import logger
 
+
 class GeminiService:
     def __init__(self):
         self.keys = settings.gemini_keys_list
@@ -13,8 +14,10 @@ class GeminiService:
 
     def _prepare_prompt(self, project_text: str) -> str:
         skills_str = "\n- ".join(BIO["main_skills"])
-        portfolio_str = "\n".join([f"- {p['title']}: {p['url']}" for p in BIO["portfolio"]])
-        
+        portfolio_str = "\n".join(
+            [f"- {p['title']}: {p['url']}" for p in BIO["portfolio"]]
+        )
+
         prompt = f"""Ты — интеллектуальный ассистент фрилансера по имени {BIO['name']}. 
 Твоя задача: проанализировать проект и составить идеальный отклик + инструкцию.
 
@@ -52,24 +55,27 @@ class GeminiService:
 
     async def generate_response(self, project_text: str) -> str:
         prompt = self._prepare_prompt(project_text)
-        
+
         for key in self.keys:
             url = self.url_template.format(key)
             payload = {
                 "contents": [{"parts": [{"text": prompt}]}],
-                "generationConfig": {"temperature": 0.7}
+                "generationConfig": {"temperature": 0.7},
             }
             try:
                 async with aiohttp.ClientSession() as session:
                     async with session.post(url, json=payload, timeout=20) as resp:
                         if resp.status == 200:
                             data = await resp.json()
-                            return data['candidates'][0]['content']['parts'][0]['text'].strip()
+                            return data["candidates"][0]["content"]["parts"][0][
+                                "text"
+                            ].strip()
                         else:
                             logger.warning(f"Gemini key failed (status {resp.status})")
             except Exception as e:
                 logger.error(f"Gemini API error: {e}")
-                
+
         return "❌ Не удалось сгенерировать отклик. Все лимиты исчерпаны."
+
 
 gemini_service = GeminiService()

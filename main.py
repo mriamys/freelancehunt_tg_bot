@@ -10,6 +10,7 @@ from services.monitor import start_monitoring
 from services.cleaner import start_cleaner
 from utils.logger import logger
 
+
 async def main():
     # Инициализация БД
     await init_db()
@@ -17,7 +18,7 @@ async def main():
     # Инициализация Бота
     bot = Bot(
         token=settings.BOT_TOKEN.get_secret_value(),
-        default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML),
     )
     dp = Dispatcher()
     dp.include_router(router)
@@ -35,6 +36,7 @@ async def main():
         monitor_task.cancel()
         cleaner_task.cancel()
         await bot.session.close()
+
 
 if __name__ == "__main__":
     try:

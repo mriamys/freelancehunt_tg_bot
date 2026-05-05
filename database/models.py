@@ -4,6 +4,7 @@ from datetime import datetime
 
 Base = declarative_base()
 
+
 class SentProject(Base):
     __tablename__ = "sent_projects"
 
