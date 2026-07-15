@@ -25,7 +25,7 @@ def format_project_notification(project: dict, employer_stats: str = "") -> str:
         desc = desc[:3000] + "...\n[Полное описание на сайте]"
 
     msg = (
-        f"📢Ф <b>{html.escape(title)}</b>\n\n"
+        f"📢 <b>{html.escape(title)}</b>\n\n"
         f"💰 <b>Бюджет:</b> <code>{budget_amount} {currency}</code>\n"
         f"🛡 <b>Сейф:</b> {safe_str}\n"
         f"🛠 <b>Категории:</b> {html.escape(skills_str)}\n"
