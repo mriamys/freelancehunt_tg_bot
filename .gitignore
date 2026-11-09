@@ -4,3 +4,12 @@
 __pycache__/
 .venv/
 api_key.json
+.env
+*.cache
+*.log
+*.session
+*.db-wal
+*.db-shm
+bot_state*.json
+__pycache__/
+*.pyc
